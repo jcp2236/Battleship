@@ -1,5 +1,6 @@
 from random import randint
 
+#first, the board is generated
 board = []
 
 for x in range(5):
@@ -12,6 +13,7 @@ def print_board(board):
 print "Let's play Battleship!"
 print_board(board)
 
+#the ship's random location is created
 def random_row(board):
     return randint(0, len(board) - 1)
 
@@ -21,12 +23,12 @@ def random_col(board):
 ship_row = random_row(board)
 ship_col = random_col(board)
 
-# Everything from here on should go in your for loop!
-# Be sure to indent four spaces!
+#user input with 4 turns in the game
 for turn in range(4):
     guess_row = int(raw_input("Guess Row:"))
     guess_col = int(raw_input("Guess Col:"))
 
+#if the numbers match, the ship is toast
     if guess_row == ship_row and guess_col == ship_col:
         print "Congratulations! You sunk my battleship!"
         break
@@ -38,7 +40,7 @@ for turn in range(4):
         else:
             print "You missed my battleship!"
             board[guess_row][guess_col] = "X"
-        # Print (turn + 1) here!
+       
         print "Turn", (turn + 1)
         print_board(board)
         if turn == 3:

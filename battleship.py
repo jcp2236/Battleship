@@ -1,49 +1,1 @@
-from random import randint
-
-#first, the board is generated
-board = []
-
-for x in range(5):
-    board.append(["O"] * 5)
-
-def print_board(board):
-    for row in board:
-        print " ".join(row)
-
-print "Let's play Battleship!"
-print_board(board)
-
-#the ship's random location is created
-def random_row(board):
-    return randint(0, len(board) - 1)
-
-def random_col(board):
-    return randint(0, len(board[0]) - 1)
-
-ship_row = random_row(board)
-ship_col = random_col(board)
-
-#user input with 5 turns in the game
-for turn in range(5):
-    guess_row = int(raw_input("Guess Row(0-4):"))
-    guess_col = int(raw_input("Guess Col(0-4):"))
-
-#if the numbers match, the ship is toast
-    if guess_row == ship_row and guess_col == ship_col:
-        print "Congratulations! You sunk my battleship!"
-        break
-    else:
-        if (guess_row < 0 or guess_row > 4) or (guess_col < 0 or guess_col > 4):
-            print "Oops, that's not even in the ocean."
-        elif(board[guess_row][guess_col] == "X"):
-            print "You guessed that one already."
-        else:
-            print "You missed my battleship!"
-            board[guess_row][guess_col] = "X"
-       
-        print "Turn", (turn + 1)
-        print_board(board)
-        if turn == 4:
-            print "Game Over"
-            print "Ship Row:", ship_row,"    " "Ship Column:", ship_col
-            print "\n", "No quarter! Run the script to play again!"
+from random import randint#the ship's random location is createddef random_row(board):    return randint(0, len(board) - 1)def random_col(board):    return randint(0, len(board[0]) - 1)def make_board():    #you may want to consider a    #Board class.  Python classes may be new    #to you but they are important to learn    #about    #first, the board is generated    board = []    for x in range(5):        board.append(["O"] * 5)    board = [["O"] * 5 for x in range(5)]    #this is called a list comprehension.  It does the exact    # same thing as your board-creation but it's    # cleaner and more "Pythonic".    print "Let's play Battleship!"    print_board(board)    return boarddef print_board(board):    for row in board:        print " ".join(row)def play_game():    board = make_board()    ship_row = random_row(board)    ship_col = random_col(board)    #user input with 5 turns in the game    for turn in range(5):        guess_row = int(raw_input("Guess Row(0-4):"))        guess_col = int(raw_input("Guess Col(0-4):"))        #if the user inputs a letter instead of a number here,        #the program crashes.  You        #need a "Try-Except" block here.    #if the numbers match, the ship is toast        if guess_row == ship_row and guess_col == ship_col:            print "Congratulations! You sunk my battleship!"            break        else:            if not (0 <= guess_row <= 4) or not (0 <= guess_col <= 4):                print "Oops, that's not even in the ocean."            elif(board[guess_row][guess_col] == "X"):                print "You guessed that one already."            else:                print "You missed my battleship!"                board[guess_row][guess_col] = "X"            print "Turn {}".format(turn + 1)            #this is called string formatting and is a cleaner way to this            #also, do you want to use up a turn if it's an invalid guess?            print_board(board)            if turn == 4:                print "Game Over"                print "Ship Row: {}, Ship Column: {}".format(ship_row, ship_col)                print "\n", "No quarter! Run the script to play again!"if __name__ == '__main__':    #this method means that if "battleship.py" is    #the file being run, it will run the below    #commands.  Without it, if you were to import    #the whole file into another one (like if you    #wanted to use a piece of it for something else)    #it would run your program when you might not    #want it to.    play_game()
